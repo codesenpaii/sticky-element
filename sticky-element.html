@@ -1,0 +1,49 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<dom-module id="sticky-element">
+  <style include="shared-styles">
+    :host {
+      position: sticky;
+      top: 0.5rem;
+    }
+  </style>
+  <template>
+    <content></content>
+  </template>
+
+  <script src="../Stickyfill/dist/stickyfill.min.js"></script>
+
+  <script>
+    Polymer({
+      is: 'sticky-element',
+
+      properties: {
+        disabled: {
+          type: Boolean,
+          observer: '_disabledChanged'
+        }
+      },
+
+      _updateSticky: function(sticky) {
+        if (sticky) {
+          Stickyfill.add(this);
+        } else {
+          Stickyfill.remove(this);
+        }
+
+        Stickyfill.rebuild();
+      },
+
+      _disabledChanged: function(disabled) {
+        this._updateSticky(!disabled)
+      },
+
+      attached: function() {
+        if (!this.disabled) {
+          this._updateSticky(true);
+          document.addEventListener('DOMContentLoaded', Stickyfill.rebuild)
+        }
+      }
+    });
+  </script>
+</dom-module>

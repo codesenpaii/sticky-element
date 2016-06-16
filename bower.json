@@ -1,0 +1,26 @@
+{
+  "name": "sticky-element",
+  "authors": [
+    "Sean King <sean@seanking.org>"
+  ],
+  "description": "A position:sticky wrapper web component",
+  "main": "sticky-element.html",
+  "keywords": [
+    "web-components",
+    "sticky",
+    "stickyfill"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Stickyfill": "seaneking/stickyfill#master",
+    "polymer": "^1.5.0"
+  }
+}
