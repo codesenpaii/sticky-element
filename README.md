@@ -1,7 +1,7 @@
 # Sticky Element
 ![][bower-badge] [![][bowerdeps-badge]][bowerdeps-url]
 
-`sticky-element` is a custom element wrapper around the [Stickyfill](stickyfill) `position: sticky` Polyfill.
+`sticky-element` is [sticky positioned](https://developer.mozilla.org/en/docs/Web/CSS/position#Sticky_positioning) container. It uses the [Stickyfill](https://github.com/wilddeer/stickyfill) `position: sticky` polyfill for cross-browser support.
 
 ### Installation and usage
 Install with bower 
