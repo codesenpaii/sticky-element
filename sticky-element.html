@@ -42,7 +42,9 @@
       attached: function() {
         if (!this.disabled) {
           this._updateSticky(true);
-          document.addEventListener('DOMContentLoaded', Stickyfill.rebuild)
+          document.addEventListener('DOMContentLoaded', function() {
+            Polymer.RenderStatus.afterNextRender(this, Stickyfill.rebuild);
+          });
         }
       }
     });
