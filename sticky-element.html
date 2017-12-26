@@ -1,31 +1,72 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer/polymer-element.html">
 
 <dom-module id="sticky-element">
-  <style include="shared-styles">
-    :host {
-      position: -webkit-sticky;
-      position: sticky;
-      top: 0.5rem;
-    }
-  </style>
   <template>
-    <content></content>
+    <style>
+      :host {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0.5rem;
+      }
+    </style>
+
+    <slot></slot>
+
   </template>
-
   <script src="../Stickyfill/dist/stickyfill.min.js"></script>
-
   <script>
-    Polymer({
-      is: 'sticky-element',
+    /**
+     * `sticky-element` Description
+     *
+     * @summary ShortDescription.
+     * @customElement
+     * @polymer
+     * @extends {Polymer.Element}
+     */
+    class StickyElement extends Polymer.Element {
+      /**
+       * String providing the tag name to register the element under.
+       */
+      static get is() {
+        return 'sticky-element';
+      }
 
-      properties: {
-        disabled: {
-          type: Boolean,
-          observer: '_disabledChanged'
-        }
-      },
+      /**
+       * Object describing property-related metadata used by Polymer features
+       */
+      static get properties() {
+        return {
+          disabled: {
+            type: Boolean,
+            observer: '_disabledChanged'
+          }
+        };
+      }
 
-      _updateSticky: function(sticky) {
+      /**
+       * Instance of the element is created/upgraded. Use: initializing state,
+       * set up event listeners, create shadow dom.
+       * @constructor
+       */
+      constructor() {
+        super();
+      }
+
+      /**
+       * Use for one-time configuration of your component after local DOM is initialized. 
+       */
+      ready() {
+        super.ready();
+
+        Polymer.RenderStatus.afterNextRender(this, function() {
+          if (!this.disabled) {
+            this._updateSticky(true);
+            Stickyfill.rebuild();
+          }
+        });
+      }
+
+      _updateSticky (sticky) {
         if (sticky) {
           Stickyfill.add(this);
         } else {
@@ -33,20 +74,13 @@
         }
 
         Stickyfill.rebuild();
-      },
-
-      _disabledChanged: function(disabled) {
-        this._updateSticky(!disabled)
-      },
-
-      attached: function() {
-        if (!this.disabled) {
-          this._updateSticky(true);
-          document.addEventListener('DOMContentLoaded', function() {
-            Polymer.RenderStatus.afterNextRender(this, Stickyfill.rebuild);
-          });
-        }
       }
-    });
+
+      _disabledChanged (disabled) {
+        this._updateSticky(!disabled)
+      }
+    }
+
+    window.customElements.define(StickyElement.is, StickyElement);
   </script>
 </dom-module>
