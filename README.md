@@ -26,5 +26,3 @@ You can disable a sticky element any time with the `disabled` property
     I am no longer sticky :-(
 </sticky-element>
 ```
-
---
